@@ -1,3 +1,18 @@
+import { execSync } from 'child_process';
+/**
+ * Commits changes to git. If a message is provided, uses it; otherwise, generates an automatic message.
+ * @param message Optional commit message. If not provided, uses an auto-generated message.
+ */
+export function autoCommit(message?: string) {
+    // Stage all changes
+    execSync('git add .', { stdio: 'inherit' });
+    // Use provided message or generate one
+    const commitMessage = message && message.trim().length > 0
+        ? message
+        : `Auto commit on ${new Date().toISOString()}`;
+    // Commit
+    execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+}
 /**
  * Formats a Date object to IST (Indian Standard Time) and UTC in brackets.
  * Example output: "07/09/2025, 18:30:00 (UTC: 2025-09-07 13:00:00 UTC)"
