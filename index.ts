@@ -93,8 +93,10 @@ async function main() {
             break;
         }
 
-        const currentDateTime = new Date().toLocaleString('sv-SE').replace(' ', 'T');
-        const timeZoneString = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // Use IST and UTC formatting for current datetime
+    const { formatTimeISTWithUTC } = await import('./tools');
+    const currentDateTime = formatTimeISTWithUTC(new Date());
+    const timeZoneString = 'Asia/Kolkata';
 
         const result = await app.invoke(
             {

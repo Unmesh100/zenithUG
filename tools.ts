@@ -129,7 +129,7 @@ const listDir = async (dirPath: string) => {
 export const automationAgent = async (params: { type: string; [key: string]: any }) => {
     switch (params.type) {
         case 'git-commit':
-            return await runShellCommand(`git commit -am "${params.message || 'Auto commit'}"`);
+            return await runShellCommand('git commit -am "Auto commit"');
         case 'git-push':
             return await runShellCommand('git push');
         case 'git-pull':
