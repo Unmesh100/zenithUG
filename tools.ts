@@ -277,6 +277,201 @@ export const listDirTool = tool(
     }
 );
 
+export const gitCommitTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git commit -am "Auto commit"', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-commit',
+        description: 'Commit all staged changes with a default message.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitPushTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git push', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-push',
+        description: 'Push committed changes to the remote repository.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitStatusTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git status', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-status',
+        description: 'Show the current git status.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitPullTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git pull', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-pull',
+        description: 'Pull the latest changes from the remote repository.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitCloneTool = tool(
+    async (params) => {
+        const { repoUrl } = params as { repoUrl: string };
+        return new Promise((resolve) => {
+            exec(`git clone ${repoUrl}`, { timeout: 20000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-clone',
+        description: 'Clone a git repository from a given URL.',
+        schema: z.object({
+            repoUrl: z.string().describe('Repository URL to clone.'),
+        }),
+    }
+);
+
+export const gitLogTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git log --oneline -n 10', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-log',
+        description: 'Show the last 10 git commit logs (oneline).',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitAddTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git add .', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout || 'All changes staged.');
+                }
+            });
+        });
+    },
+    {
+        name: 'git-add',
+        description: 'Stage all changes for commit.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitBranchTool = tool(
+    async () => {
+        return new Promise((resolve) => {
+            exec('git branch', { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-branch',
+        description: 'List all local git branches.',
+        schema: z.object({}).optional(),
+    }
+);
+
+export const gitCheckoutTool = tool(
+    async (params) => {
+        const { branch } = params as { branch: string };
+        return new Promise((resolve) => {
+            exec(`git checkout ${branch}`, { timeout: 10000 }, (error, stdout, stderr) => {
+                if (error) {
+                    resolve(`Error: ${error.message}`);
+                } else if (stderr) {
+                    resolve(`Stderr: ${stderr}`);
+                } else {
+                    resolve(stdout);
+                }
+            });
+        });
+    },
+    {
+        name: 'git-checkout',
+        description: 'Switch to a different git branch.',
+        schema: z.object({
+            branch: z.string().describe('Branch name to checkout.'),
+        }),
+    }
+);
+
 export const searchFilesTool = tool(
     async (params) => {
         const { dirPath, pattern } = params as { dirPath: string; pattern: string };

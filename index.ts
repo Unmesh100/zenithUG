@@ -1,6 +1,6 @@
 import readline from 'node:readline/promises';
 import { ChatGroq } from '@langchain/groq';
-import { createEventTool, getEventsTool, cancelEventTool, getContactsTool, webSearchTool, readFileTool, writeFileTool, listDirTool, searchFilesTool, shellCommandTool, httpRequestTool, weatherTool, newsTool } from './tools';
+import { createEventTool, getEventsTool, cancelEventTool, getContactsTool, webSearchTool, readFileTool, writeFileTool, listDirTool, searchFilesTool, shellCommandTool, httpRequestTool, weatherTool, newsTool, gitCommitTool, gitPushTool, gitStatusTool, gitPullTool, gitCloneTool, gitLogTool, gitAddTool, gitBranchTool, gitCheckoutTool } from './tools';
 import { openUrlTool } from './tools';
 import { END, MemorySaver, MessagesAnnotation, StateGraph } from '@langchain/langgraph';
 import { ToolNode } from '@langchain/langgraph/prebuilt';
@@ -20,7 +20,16 @@ const tools = [
     httpRequestTool,
     weatherTool,
     newsTool,
-    openUrlTool
+    openUrlTool,
+    gitCommitTool,
+    gitPushTool,
+    gitStatusTool,
+    gitPullTool,
+    gitCloneTool,
+    gitLogTool,
+    gitAddTool,
+    gitBranchTool,
+    gitCheckoutTool
 ];
 
 const model = new ChatGroq({
