@@ -1,3 +1,21 @@
+/**
+ * Runs a shell command in macOS Terminal using AppleScript.
+ * @param command The shell command to run (e.g., 'npx unmesh28')
+ */
+export function runInMacTerminal(command: string): void {
+    const script = `osascript -e 'tell application "Terminal" to do script "${command.replace(/"/g, '\"')}"'`;
+    exec(script, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Stderr: ${stderr}`);
+            return;
+        }
+        console.log(`Stdout: ${stdout}`);
+    });
+}
 import { execSync } from 'child_process';
 /**
  * Commits changes to git. If a message is provided, uses it; otherwise, generates an automatic message.
