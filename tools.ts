@@ -12,7 +12,7 @@ export function autoCommit(message?: string) {
         commitMessage = message.trim();
     } else {
         commitMessage = `Auto commit on ${new Date().toISOString()}`;
-    }
+    } 
     // Commit
     execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
 }
