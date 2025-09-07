@@ -1,6 +1,7 @@
 import readline from 'node:readline/promises';
 import { ChatGroq } from '@langchain/groq';
 import { createEventTool, getEventsTool, cancelEventTool, getContactsTool, webSearchTool, readFileTool, writeFileTool, listDirTool, searchFilesTool, shellCommandTool, httpRequestTool, weatherTool, newsTool } from './tools';
+import { openUrlTool } from './tools';
 import { END, MemorySaver, MessagesAnnotation, StateGraph } from '@langchain/langgraph';
 import { ToolNode } from '@langchain/langgraph/prebuilt';
 import type { AIMessage } from '@langchain/core/messages';
@@ -18,7 +19,8 @@ const tools = [
     shellCommandTool,
     httpRequestTool,
     weatherTool,
-    newsTool
+    newsTool,
+    openUrlTool
 ];
 
 const model = new ChatGroq({
@@ -30,7 +32,9 @@ const model = new ChatGroq({
  * Assistant node
  */
 async function callModel(state: typeof MessagesAnnotation.State) {
-    const response = await model.invoke(state.messages);
+    // Limit messages to last 10 to avoid context length exceeded errors
+    const limitedMessages = state.messages.slice(-10);
+    const response = await model.invoke(limitedMessages);
     return { messages: [response] };
 }
 

@@ -1,3 +1,50 @@
+export const openUrlTool = tool(
+    async (params) => {
+        const { url, browser } = params as { url: string; browser?: string };
+        try {
+            // Use macOS 'open' command to launch the URL in the specified browser
+            const { exec } = await import('child_process');
+            let openCmd = '';
+            if (browser) {
+                let browserApp = browser.trim().toLowerCase();
+                if (browserApp === 'chrome' || browserApp === 'google chrome') {
+                    browserApp = 'Google Chrome';
+                } else if (browserApp === 'safari') {
+                    browserApp = 'Safari';
+                } else if (browserApp === 'firefox' || browserApp === 'mozilla firefox') {
+                    browserApp = 'Firefox';
+                } else if (browserApp === 'edge' || browserApp === 'microsoft edge') {
+                    browserApp = 'Microsoft Edge';
+                } else {
+                    // Capitalize first letter for generic browser names
+                    browserApp = browser.charAt(0).toUpperCase() + browser.slice(1);
+                }
+                openCmd = `open -a \"${browserApp}\" \"${url}\"`;
+            } else {
+                openCmd = `open \"${url}\"`;
+            }
+            return new Promise((resolve) => {
+                exec(openCmd, (error) => {
+                    if (error) {
+                        resolve(`Error opening URL: ${error.message}`);
+                    } else {
+                        resolve(`URL opened in ${browser ? browser : 'default browser'}.`);
+                    }
+                });
+            });
+        } catch (err) {
+            return `Error opening URL: ${err}`;
+        }
+    },
+    {
+        name: 'open-url',
+        description: 'Open a URL in the specified web browser (Chrome or default).',
+        schema: z.object({
+            url: z.string().describe('The URL to open.'),
+            browser: z.string().optional().describe('Browser to use (e.g., "chrome").'),
+        }),
+    }
+);
 export const weatherTool = tool(
     async (params) => {
         const { city } = params as { city: string };
