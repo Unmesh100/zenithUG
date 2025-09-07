@@ -1,7 +1,7 @@
 /**
  * Formats a Date object to IST (Indian Standard Time) and UTC in brackets.
  * Example output: "07/09/2025, 18:30:00 (UTC: 2025-09-07 13:00:00 UTC)"
- */
+ */ 
 export function formatTimeISTWithUTC(date: Date): string {
     // Format IST
     const istString = date.toLocaleString('en-IN', {
