@@ -1,4 +1,11 @@
-# ai-agent
+# CLI based AI agent to Automate Day to Day Tasks.
+
+
+
+https://github.com/user-attachments/assets/603d7485-4052-431e-8e16-1d0bcdcc79b4
+
+
+
 
 To install dependencies:
 
